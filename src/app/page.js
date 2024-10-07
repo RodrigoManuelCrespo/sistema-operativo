@@ -1,112 +1,51 @@
+
 'use client'
 
-import { useState } from 'react'
-import {
-  Home,
-  Search,
-  Folder,
-  Settings,
-  Terminal,
-  Globe,
-  Wifi,
-  Volume2,
-  Battery,
-  Clock,
-  Mail,
-  Calendar,
-  Music
-} from 'lucide-react'
+import React, { useState, useEffect } from "react"
+import { Battery, Signal, Wifi, Lock } from "lucide-react"
+import Link from 'next/link'
 
-export default function Component() {
-  const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString())
+export default function AndroidLockScreen() {
+  const [currentTime, setCurrentTime] = useState(new Date())
 
-  // Update time every second
-  setInterval(() => {
-    setCurrentTime(new Date().toLocaleTimeString())
-  }, 1000)
+  useEffect(() => {
+    const timer = setInterval(() => setCurrentTime(new Date()), 1000)
+    return () => clearInterval(timer)
+  }, [])
+
+  const formatDate = (date) => {
+    const options = { weekday: 'long', month: 'long', day: 'numeric' }
+    return date.toLocaleDateString('es-ES', options)
+  }
 
   return (
-    <div className="flex flex-col h-screen bg-gradient-to-br from-purple-700 via-pink-600 to-red-500 text-white overflow-hidden">
-      {/* Top bar */}
-      <div className="flex justify-between items-center bg-black bg-opacity-20 backdrop-blur-md p-2 h-12">
-        <div className="text-xl font-bold">ModernOS</div>
-        <div className="flex items-center space-x-4">
-          <Wifi className="w-5 h-5" />
-          <Volume2 className="w-5 h-5" />
-          <Battery className="w-5 h-5" />
-          <Clock className="w-5 h-5" />
-          <span className="text-sm">{currentTime}</span>
+    <div className="w-full h-screen bg-gradient-to-br from-blue-500 to-purple-600 flex flex-col">
+      {/* Barra de estado */}
+      <div className="flex justify-between items-center px-6 py-3 bg-black bg-opacity-20 backdrop-blur-md text-white">
+        <span className="text-sm font-medium">{currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+        <div className="flex items-center space-x-3">
+          <Wifi size={16} />
+          <Battery size={16} />
         </div>
       </div>
 
-      {/* Main content area */}
-      <div className="flex flex-1">
-        {/* Left sidebar */}
-        <div className="flex flex-col items-center bg-black bg-opacity-20 backdrop-blur-md w-20 py-6 space-y-6">
-          <button className="rounded-full bg-white bg-opacity-10 hover:bg-opacity-20 transition-all duration-300 p-2">
-            <Home className="w-6 h-6" />
+      {/* Contenido principal */}
+      <div className="flex-grow flex flex-col items-center justify-center text-white">
+        <h1 className="text-6xl font-bold mb-2" aria-label={`La hora es ${currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`}>
+          {currentTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+        </h1>
+        <p className="text-xl mb-8" aria-label={`La fecha es ${formatDate(currentTime)}`}>
+          {formatDate(currentTime)}
+        </p>
+        <Link href="/home">
+          <button
+            className="bg-white bg-opacity-20 backdrop-blur-md text-white px-8 py-3 rounded-full flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 hover:bg-opacity-30 transition-all"
+            aria-label="Desliza para desbloquear"
+          >
+            <Lock size={20} />
+            <span>Desbloquear</span>
           </button>
-          <button className="rounded-full bg-white bg-opacity-10 hover:bg-opacity-20 transition-all duration-300 p-2">
-            <Search className="w-6 h-6" />
-          </button>
-          <button className="rounded-full bg-white bg-opacity-10 hover:bg-opacity-20 transition-all duration-300 p-2">
-            <Folder className="w-6 h-6" />
-          </button>
-          <button className="rounded-full bg-white bg-opacity-10 hover:bg-opacity-20 transition-all duration-300 p-2">
-            <Globe className="w-6 h-6" />
-          </button>
-          <button className="rounded-full bg-white bg-opacity-10 hover:bg-opacity-20 transition-all duration-300 p-2">
-            <Terminal className="w-6 h-6" />
-          </button>
-          <button className="rounded-full bg-white bg-opacity-10 hover:bg-opacity-20 transition-all duration-300 p-2">
-            <Settings className="w-6 h-6" />
-          </button>
-        </div>
-
-        {/* Desktop area */}
-        <div className="flex-1 p-6 relative">
-          {/* Simulated application window */}
-          <div className="absolute top-8 left-8 w-[400px] h-[300px] bg-black bg-opacity-50 backdrop-blur-md border-none shadow-2xl rounded-lg overflow-hidden">
-            <div className="flex items-center justify-between bg-white bg-opacity-10 p-3">
-              <div className="flex space-x-2">
-                <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                <div className="w-3 h-3 rounded-full bg-green-500"></div>
-              </div>
-              <span className="text-sm font-medium">Terminal</span>
-              <div></div>
-            </div>
-            <div className="p-4 font-mono text-sm">
-              <p className="opacity-70">user@modernos:~$ ls</p>
-              <p className="opacity-90">Agus ponete a estudiar</p>
-              <p className="opacity-70">user@modernos:~$ echo Hello, Modern World!</p>
-              <p className="opacity-90">Guada deja las granjas</p>
-              <p className="opacity-70">user@modernos:~$ _</p>
-              <p className="opacity-90">Seba el frio te pega mal</p>
-              <p className="opacity-70">user@modernos:~$ _</p>
-              <p className="opacity-90">Juli regalame las entradas para sig ragga</p>
-              <p className="opacity-70">user@modernos:~$ _</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Dock */}
-      <div className="flex justify-center mb-4">
-        <div className="flex space-x-4 bg-white bg-opacity-10 backdrop-blur-md p-2 rounded-full">
-          <button className="rounded-full bg-white bg-opacity-10 hover:bg-opacity-20 transition-all duration-300 p-2">
-            <Mail className="w-6 h-6" />
-          </button>
-          <button className="rounded-full bg-white bg-opacity-10 hover:bg-opacity-20 transition-all duration-300 p-2">
-            <Calendar className="w-6 h-6" />
-          </button>
-          <button className="rounded-full bg-white bg-opacity-10 hover:bg-opacity-20 transition-all duration-300 p-2">
-            <Globe className="w-6 h-6" />
-          </button>
-          <button className="rounded-full bg-white bg-opacity-10 hover:bg-opacity-20 transition-all duration-300 p-2">
-            <Music className="w-6 h-6" />
-          </button>
-        </div>
+        </Link>
       </div>
     </div>
   )
