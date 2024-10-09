@@ -47,22 +47,22 @@ export default function ModernOS() {
             {/* Desktop */}
             <div className="flex-grow grid grid-cols-3 gap-4">
                 <div className="col-span-2 space-y-4">
-                    <div className="bg-white/10 rounded-lg p-4">
+                    <div className="bg-white/10 rounded-lg p-4 hover:bg-yellow-300 hover:opacity-80 transition-all">
                         <Link href={"/contable"}>
                             <h2 className="font-bold mb-2">Sistema Contable</h2>
                             <div className="flex justify-between">
                                 <div>Ingresos: $10,000</div>
-                                <div>Gastos: $7,500</div>
+                                <div>Gastos: $7,300</div>
                             </div>
                         </Link>
                     </div>
-                    <div className="bg-white/10 rounded-lg p-4">
+                    <div className="bg-white/10 rounded-lg p-4 hover:bg-blue-300 hover:opacity-80 transition-all">
                         <Link href={"/stock"}>
                             <h2 className="font-bold mb-2">Sistema de Gestión</h2>
                             <div>Productos bajos en stock: 5</div>
                         </Link>
                     </div>
-                    <div className="bg-white/10 rounded-lg p-4">
+                    <div className="bg-white/10 rounded-lg p-4 hover:bg-red-300 hover:opacity-80 transition-all">
                         <Link href={"/rrhh"}>
                             <h2 className="font-bold mb-2">Recursos Humanos</h2>
                             <div className="flex justify-between">
@@ -72,7 +72,7 @@ export default function ModernOS() {
                             <div className="mt-2">Próximas entrevistas: 5</div>
                         </Link>
                     </div>
-                    <div className="bg-white/10 rounded-lg p-4">
+                    <div className="bg-white/10 rounded-lg p-4 hover:bg-green-300 hover:opacity-80 transition-all">
                         <Link href={"/logistica"}>
                             <h2 className="font-bold mb-2">Logística</h2>
                             <div>Envíos pendientes: 12</div>
